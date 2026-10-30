@@ -14,13 +14,25 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: npm install
-      - run: npx electron-builder --win nsis --publish never
-      - uses: actions/upload-artifact@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build website
+        run: npm run build
+
+      - name: Build Windows installer
+        run: npx electron-builder --win nsis --publish never
+
+      - name: Upload Windows installer
+        uses: actions/upload-artifact@v4
         with:
           name: stud-kviz-windows
           path: release/*.exe
@@ -28,13 +40,25 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 24
-      - run: npm install
-      - run: npx electron-builder --linux AppImage deb --publish never
-      - uses: actions/upload-artifact@v4
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build website
+        run: npm run build
+
+      - name: Build Ubuntu installers
+        run: npx electron-builder --linux AppImage deb --publish never
+
+      - name: Upload Ubuntu installers
+        uses: actions/upload-artifact@v4
         with:
           name: stud-kviz-linux
           path: |
