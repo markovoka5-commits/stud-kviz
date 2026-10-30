@@ -1,0 +1,53 @@
+{
+  "name": "stud-kviz",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Студ-квиз — учебная викторина",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "desktop:linux": "npm run build && electron-builder --linux AppImage deb",
+    "desktop:windows": "npm run build && electron-builder --win nsis"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  },
+  "build": {
+    "appId": "ru.studkviz.desktop",
+    "productName": "Студ-квиз",
+    "asar": true,
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/main.cjs",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Студ-квиз"
+    },
+    "linux": {
+      "category": "Education",
+      "target": ["AppImage", "deb"]
+    }
+  }
+}
